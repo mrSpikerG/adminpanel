@@ -7,6 +7,15 @@
   pointer-events: none;
 }
 
+.loginpage{
+  background-size: 100%;
+  background-image: url(https://abrakadabra.fun/uploads/posts/2021-12/1640215859_1-abrakadabra-fun-p-anime-peizazh-gorizontalno-1.jpg);
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
