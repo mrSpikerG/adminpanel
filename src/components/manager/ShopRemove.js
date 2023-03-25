@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-
+import getBaseURI from '../../store';
 class ShopRemove extends Component {
     constructor(props) {
         super(props);
@@ -22,7 +22,7 @@ class ShopRemove extends Component {
 
         axios({
             method: 'post',
-            url: `https://localhost:7020/api/Shop/Delete?id=${this.state.id}`,
+            url: `${getBaseURI()}/api/Shop/Delete?id=${this.state.id}`,
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-
+import getBaseURI from '../../store';
 class CategoryAdd extends Component {
 
 
@@ -29,7 +29,7 @@ class CategoryAdd extends Component {
 
         axios({
             method: 'post',
-            url: `https://localhost:7020/api/Category/Insert?name=${this.state.title}&image=${this.state.picture}`,
+            url: `${getBaseURI()}/api/Category/Insert?name=${this.state.title}&image=${this.state.picture}`,
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
@@ -42,7 +42,7 @@ class CategoryAdd extends Component {
 
     render() {
         return (
-            <div className="col-lg-4 grid-margin stretch-card">
+            <div className="col-lg-12 grid-margin stretch-card">
                 <div className="card">
                     <div className="card-body">
                         <div className="page-header">

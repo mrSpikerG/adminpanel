@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-
+import getBaseURI from '../../store';
 class CategoryRemove extends Component {
 
     constructor(props) {
@@ -23,7 +23,7 @@ class CategoryRemove extends Component {
 
         axios({
             method: 'post',
-            url: `https://localhost:7020/api/Category/Delete?id=${this.state.id}`,
+            url: `${getBaseURI()}/api/Category/Delete?id=${this.state.id}`,
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },

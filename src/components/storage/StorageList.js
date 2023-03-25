@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import FindBar from '../manager/FindBar';
 import axios from 'axios';
-import FindBar from './FindBar';
 import getBaseURI from '../../store';
+class StorageList extends Component {
 
-class CategoryList extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            categoryList: '',
+            fileList: '',
             textToFind: '',
             rawData: '',
             isMounted: false
@@ -18,36 +18,33 @@ class CategoryList extends Component {
     }
 
     changeState = event => {
-        this.setState({ textToFind: event.target.value },()=>{  this.updateUI();});
+        this.setState({ textToFind: event.target.value }, () => { this.updateUI(); });
     }
 
-
     componentDidMount() {
-        
+
         if (!this.state.isMounted) {
             this.state.isMounted = true;
             this.updateUI()
 
         }
     }
-    
-    updateUI(){
 
+    updateUI() {
         axios({
             method: 'get',
-            url: `${getBaseURI()}/api/Category/Get`,
+            url: `${getBaseURI()}/api/Azure/getFiles/api/getFiles`,
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
         }).then(function (response) {
-
             this.setState({
                 rawData:
                     response.data.filter(function (e) {
                         let Names = true;
 
                         if (this.state.textToFind !== "") {
-                            if (!e.name.toLowerCase().includes(this.state.textToFind.toLowerCase())) {
+                            if (!e.uri.toLowerCase().includes(this.state.textToFind.toLowerCase())) {
                                 Names = false;
                             }
                         }
@@ -57,34 +54,35 @@ class CategoryList extends Component {
             }, () => {
 
                 this.setState({
-                    categoryList: this.state.rawData.map((item, index) => {
-                        return <tr key={`category-${index}`}><td>{item.id}</td><td>{item.name}</td><td><img  onError={({ currentTarget }) => {
+                    fileList: this.state.rawData.map((item, index) => {
+                        return <tr key={`storage-${index}`}><td><img onError={({ currentTarget }) => {
                             currentTarget.onerror = null; // prevents looping
                             currentTarget.src = "https://spikershop.blob.core.windows.net/files/1657c317-7c54-4197-b30f-e10089ece4d9.png	";
-                        }} src={item.image} /></td></tr>
+                        }} src={item.uri} /></td><td>{item.uri}</td><td>{item.creationTime}</td></tr>
                     })
                 });
             });
         }.bind(this));
     }
 
+
     render() {
         return (
             <div className="col-lg-12 grid-margin stretch-card">
                 <div className="card">
                     <div className="card-body">
-                        <FindBar title="Поиск по Категориям" textHandler={this.changeState.bind(this)} />
-                        <h4 className="card-title">Категории</h4>
+                        <FindBar title="Поиск по картинкам" textHandler={this.changeState.bind(this)} />
+                        <h4 className="card-title">Картинки</h4>
                         <table className="table table-hover">
                             <thead>
                                 <tr>
-                                    <th className="font-weight-bold">Id</th>
-                                    <th className="font-weight-bold">Название</th>
-                                    <th className="font-weight-bold">Картинка</th>
+                                    <th className="font-weight-bold">Предпросмотр</th>
+                                    <th className="font-weight-bold">Ссылка</th>
+                                    <th className="font-weight-bold">Время создания</th>
                                 </tr>
                             </thead>
                             <tbody className="category-container">
-                                {this.state.categoryList}
+                                {this.state.fileList}
                             </tbody>
                         </table>
                     </div>
@@ -94,8 +92,8 @@ class CategoryList extends Component {
     }
 }
 
-CategoryList.propTypes = {
+StorageList.propTypes = {
 
 };
 
-export default CategoryList;
+export default StorageList;

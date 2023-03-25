@@ -10,6 +10,10 @@
 .loginpage{
   background-size: 100%;
   background-image: url(https://abrakadabra.fun/uploads/posts/2021-12/1640215859_1-abrakadabra-fun-p-anime-peizazh-gorizontalno-1.jpg);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   display: flex;
   height: 100vh;
   align-items: center;
@@ -32,7 +36,11 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.admin-icon-list{
+margin: 5px;
+color: #3d363d;
+font-size:23px;
+}
 .App-link {
   color: #61dafb;
 }

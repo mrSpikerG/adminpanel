@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/1a2e6233-a539-48e0-b310-2dc5e2b684ec/resourceGroups/mygroup/providers/Microsoft.Web/sites/SpikerAdminPanel",
+    "appService.deploySubpath": "."
+}

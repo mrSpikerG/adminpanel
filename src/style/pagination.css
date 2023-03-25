@@ -1,0 +1,9 @@
+.admin-pagination-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+.admin-pagination{
+    display: flex;
+    list-style-type: none;
+}

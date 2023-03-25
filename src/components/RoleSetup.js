@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import getBaseURI from '../store';
+import Form from 'react-bootstrap/Form';
 
 class RoleSetup extends Component {
 
@@ -8,18 +10,19 @@ class RoleSetup extends Component {
         super(props);
         this.state = {
             username: '',
-            role: ''
+            role: '',
+            roles: ''
         };
     }
 
     removeRole() {
-        if(this.state.username==='' || this.state.role===''){
+        if (this.state.username === '' || this.state.role === '') {
             return;
         }
 
         axios({
             method: 'post',
-            url: `https://localhost:7020/api/Auth/SetRole/setAdmin?username=${this.state.username}&role=${this.state.role}`,
+            url: `${getBaseURI()}/api/Auth/SetRole/setAdmin?username=${this.state.username}&role=${this.state.role}`,
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
@@ -27,18 +30,17 @@ class RoleSetup extends Component {
             alert("Роль успешно добавлена");
         }.bind(this));
 
-       
+
     }
 
     addRole() {
-        if(this.state.username==='' || this.state.role===''){
+        if (this.state.username === '' || this.state.role === '') {
             return;
         }
 
-        console.log(this.state.username,this.state.role);
         axios({
             method: 'post',
-            url: `https://localhost:7020/api/admin/Admin/RemoveRole/removeAdmin?username=${this.state.username}&role=${this.state.role}`,
+            url: `${getBaseURI()}/api/admin/Admin/RemoveRole/removeAdmin?username=${this.state.username}&role=${this.state.role}`,
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
@@ -55,6 +57,21 @@ class RoleSetup extends Component {
         }
     }
 
+    componentDidMount(){
+        axios({
+            method: 'get',
+            url: `${getBaseURI()}/api/admin/Admin/GetAllRoles/acl/getRoles`,
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+            },
+        }).then(function (response) {
+            console.log(response.data);
+            this.setState({roles:response.data.map((role,index)=>{return role.name==="User"?null:<option value={role.name}>{role.name}</option>})})
+            
+        }.bind(this));
+    }
+
+
     render() {
         return (
             <div className="col-lg-12 grid-margin stretch-card">
@@ -64,7 +81,11 @@ class RoleSetup extends Component {
                             <h3 className="page-title"> Настройки ролей </h3>
                         </div>
                         <input type="text" onChange={this.changeState.bind(this)} className="form-control col-lg-12 grid-margin stretch-card" id="admin-username" placeholder="Никнейм" />
-                        <input type="text" onChange={this.changeState.bind(this)} className="form-control col-lg-12 grid-margin stretch-card" id="admin-role" placeholder="Роль" />
+                        <Form.Control onChange={this.changeState.bind(this)} defaultValue="" id="admin-role" style={{ marginBottom: "20px" }} as="select">
+                            <option value={""} disabled>Выберите Роль</option>
+                            {this.state.roles}
+
+                        </Form.Control>
                         <button type="submit" onClick={this.removeRole.bind(this)} className="btn btn-primary mr-2" id="admin-add-role">Добавить</button>
                         <button type="submit" onClick={this.addRole.bind(this)} className="btn btn-primary mr-2" id="admin-remove-role">Удалить</button>
                     </div>

@@ -13581,14 +13581,14 @@ dl {
           left: 0;
           top: .5rem;
           bottom: 0;
-          background: #44ce42;
+          background: #FFD333;
           height: 24px;
           width: 4px; }
           .rtl .sidebar .nav .nav-item.active > .nav-link:before {
             left: auto;
             right: 0; }
         .sidebar .nav .nav-item.active > .nav-link .menu-title {
-          color: #44ce42;
+          color: #FFD333;
           font-family: "nunito-medium", sans-serif; }
         .sidebar .nav .nav-item.active > .nav-link i {
           color: #44ce42; }
@@ -14267,7 +14267,7 @@ dl {
     color: #b1b1b1; }
 
 .card{
-  max-height: 600px;
+  max-height: 800px;
   overflow-y: auto;  
   
 }
