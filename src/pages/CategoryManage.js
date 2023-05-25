@@ -17,7 +17,7 @@ class CategoryManage extends Component {
                
                 <CategoryList />
                 <CategoryAdd />
-            
+                <CategoryRemove />
             </div>
         );
     }

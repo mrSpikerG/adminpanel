@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import FindBar from './FindBar';
 import getBaseURI from '../../store';
@@ -25,8 +24,10 @@ class CategoryList extends Component {
     componentDidMount() {
         
         if (!this.state.isMounted) {
-            this.state.isMounted = true;
-            this.updateUI()
+         
+            this.setState({isMounted: true},()=>{
+                this.updateUI()
+            });
 
         }
     }
@@ -58,9 +59,9 @@ class CategoryList extends Component {
 
                 this.setState({
                     categoryList: this.state.rawData.map((item, index) => {
-                        return <tr key={`category-${index}`}><td>{item.id}</td><td>{item.name}</td><td><img  onError={({ currentTarget }) => {
+                        return <tr key={`category-${index}`}><td>{item.id}</td><td>{item.name}</td><td><img alt='notfound' onError={({ currentTarget }) => {
                             currentTarget.onerror = null; // prevents looping
-                            currentTarget.src = "https://spikershop.blob.core.windows.net/files/1657c317-7c54-4197-b30f-e10089ece4d9.png	";
+                            currentTarget.src = "https://phoneshopbucket.s3.eu-west-2.amazonaws.com/74eb151d-de05-4d69-b3b5-3162bf57a8f1.png";
                         }} src={item.image} /></td></tr>
                     })
                 });
@@ -94,8 +95,5 @@ class CategoryList extends Component {
     }
 }
 
-CategoryList.propTypes = {
-
-};
 
 export default CategoryList;

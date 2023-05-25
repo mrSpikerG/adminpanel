@@ -33,7 +33,7 @@ class StorageList extends Component {
     updateUI() {
         axios({
             method: 'get',
-            url: `${getBaseURI()}/api/Azure/getFiles/api/getFiles`,
+            url: `${getBaseURI()}/api/AWS/api/getFiles`,
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             },
@@ -55,10 +55,12 @@ class StorageList extends Component {
 
                 this.setState({
                     fileList: this.state.rawData.map((item, index) => {
+                        let date = new Date(Date.parse(item.lastModified));
+                        
                         return <tr key={`storage-${index}`}><td><img onError={({ currentTarget }) => {
                             currentTarget.onerror = null; // prevents looping
-                            currentTarget.src = "https://spikershop.blob.core.windows.net/files/1657c317-7c54-4197-b30f-e10089ece4d9.png	";
-                        }} src={item.uri} /></td><td>{item.uri}</td><td>{item.creationTime}</td></tr>
+                            currentTarget.src = "https://phoneshopbucket.s3.eu-west-2.amazonaws.com/74eb151d-de05-4d69-b3b5-3162bf57a8f1.png	";
+                        }} src={item.uri} /></td><td>{item.uri}</td><td>{date.toLocaleString('en-GB')}</td></tr>
                     })
                 });
             });

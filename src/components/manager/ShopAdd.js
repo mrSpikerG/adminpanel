@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+
 import axios from 'axios';
 import getBaseURI from '../../store';
-
+import Form from 'react-bootstrap/Form';
 class ShopAdd extends Component {
 
 
@@ -12,7 +12,8 @@ class ShopAdd extends Component {
             title: '',
             picture: '',
             cost: '',
-            categoryId: ''
+            categoryId: '',
+            categories: []
         };
     }
 
@@ -29,10 +30,22 @@ class ShopAdd extends Component {
             this.setState({ picture: event.target.value });
             return;
         }
-        if (event.target.id === "manager-shop-category") {
+        if (event.target.id === "manager-shop-categories") {
             this.setState({ categoryId: event.target.value });
             return;
         }
+    }
+    componentDidMount() {
+        this.getCategories();
+    }
+    getCategories(){
+        axios({
+            method: 'get',
+            url: `${getBaseURI()}/api/Category/Get`,
+        }).then(function (response) {
+          
+            this.setState({ categories: response.data.map((item, index) => { return <option key={`category-selects-${index}`} value={item.id}>{item.name}</option> }) });
+        }.bind(this));
     }
 
     addShop() {
@@ -40,8 +53,6 @@ class ShopAdd extends Component {
         if (this.state.title === '' || this.state.cost === '' || this.state.categoryId === '' || this.state.picture === '') {
             return;
         }
-
-      
 
         axios({
             method: 'post',
@@ -69,7 +80,11 @@ class ShopAdd extends Component {
                         <input type="text" onChange={this.changeState.bind(this)} className="form-control col-lg-12 grid-margin stretch-card" id="manager-shop-cost" placeholder="Цена " />
                         <input type="text" onChange={this.changeState.bind(this)} className="form-control col-lg-12 stretch-card" id="manager-shop-image" placeholder="Картинка " />
                         <p>используйте проверенные хостинги картинок к примеру imgur</p>
-                        <input type="text" onChange={this.changeState.bind(this)} className="form-control col-lg-12 grid-margin stretch-card" id="manager-shop-category" placeholder="Id Категории " />
+                        <Form.Control onChange={this.changeState.bind(this)} id="manager-shop-categories" defaultValue="" style={{ marginBottom: "20px" }} as="select">
+                                    <option value="" disabled>Выберите категорию</option>
+                                    {this.state.categories}
+                                   
+                                </Form.Control>
                         <button type="submit" onClick={this.addShop.bind(this)} className="btn btn-primary mr-2" id="manager-add-shop">Добавить</button>
                     </div>
                 </div>
@@ -78,8 +93,6 @@ class ShopAdd extends Component {
     }
 }
 
-ShopAdd.propTypes = {
 
-};
 
 export default ShopAdd;

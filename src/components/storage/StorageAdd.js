@@ -22,7 +22,7 @@ class StorageAdd extends Component {
         let formData = new FormData();
 
         formData.append("file", this.state.file);
-        axios.post(`${getBaseURI()}/api/Azure/saveImage/api/saveImage`, formData, {
+        axios.post(`${getBaseURI()}/api/AWS/api/saveImage`, formData, {
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
                 'Content-Type': 'multipart/form-data'

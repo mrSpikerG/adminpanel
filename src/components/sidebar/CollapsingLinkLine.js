@@ -39,8 +39,5 @@ class CollapsingLinkLine extends Component {
     }
 }
 
-CollapsingLinkLine.propTypes = {
-
-};
 
 export default CollapsingLinkLine;

@@ -45,6 +45,11 @@ font-size:23px;
   color: #61dafb;
 }
 
+.admin-page-item + .active .page-link{
+  background-color: #fbdf61;
+  font-weight: 600;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
